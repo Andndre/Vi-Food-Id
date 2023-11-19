@@ -54,7 +54,7 @@
 						<img src="../public/shopeepay.png" alt="logo-shopeepay">
           </label>
 				</div>
-				<a class="px-6 py-3 rounded-md font-bold bg-primary text-white" href="../pembayaran/index.html">Lanjutkan</a>
+				<a class="px-6 py-3 rounded-md font-bold bg-primary text-white" href="../pembayaran/">Lanjutkan</a>
 			</div>
 		</div>
     <script>

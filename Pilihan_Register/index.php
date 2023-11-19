@@ -17,7 +17,7 @@
 			<a href="../register" id="register-button" class="bg-black  text-white px-8 py-4 rounded-2xl font-bold text-center">Pembeli</a>
 			<a href="../daftar_penjual/" id="register-button" class="bg-black  text-white px-8 py-4 rounded-2xl font-bold text-center mt-5">Penjual</a>
 			<div class="text-center">
-				<p class="pt-6">Sudah punya akun? <a class="underline text-black font-bold" href="../login/index.html">Masuk</a></p>
+				<p class="pt-6">Sudah punya akun? <a class="underline text-black font-bold" href="../login/">Masuk</a></p>
 			</div>
 		</div>
 	</div>

@@ -70,7 +70,7 @@
 						<span id="count">0</span>
 						<button id="tambah" class="p-[.1rem] border-2 border-gray-600 aspect-square rounded-full"><i data-feather="plus" class="h-4"></i></button>
 					</div>
-          <a href="../keranjang/index.html">
+          <a href="../keranjang/">
             <span class="px-6 py-3 rounded-xl bg-primary text-white font-bold flex gap-3"><i data-feather="shopping-cart"></i> Masukkan ke Keranjang</span>
           </a>
 				</div>

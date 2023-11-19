@@ -39,7 +39,7 @@
             title="Dashboard"
             class="transition-all duration-300 rounded-md px-4 py-2 bg-gray-900"
           >
-            <a class="flex items-center gap-3" href="../index.html">
+            <a class="flex items-center gap-3" href="../">
               <i data-feather="bar-chart-2"></i>
               <div class="sidebar-text">Dashboard</div></a
             >
@@ -48,7 +48,7 @@
           title="Manajemen Pesanan"
           class="transition-all duration-300 rounded-md px-4 py-2 bg-gray-900"
         >
-          <a class="flex items-center gap-3" href="/penjual/manajemen-pesanan/index.html">
+          <a class="flex items-center gap-3" href="/penjual/manajemen-pesanan/">
             <i data-feather="database"></i>
             <div class="sidebar-text">Manajemen Pesanan</div>
           </a>
@@ -59,7 +59,7 @@
           >
             <a
               class="flex items-center gap-3"
-              href="../manajemen-menu/index.html"
+              href="../manajemen-menu/"
             >
               <i data-feather="book-open"></i>
               <div class="sidebar-text">Manajemen Menu</div>
@@ -71,7 +71,7 @@
           >
             <a
               class="flex items-center gap-3"
-              href="../manajemen-kursi/index.html"
+              href="../manajemen-kursi/"
             >
               <i data-feather="list"></i>
               <div class="sidebar-text">Manajemen Kursi</div>
@@ -81,7 +81,7 @@
             title="Ulasan"
             class="transition-all duration-300 rounded-md px-4 py-2 bg-gray-900"
           >
-            <a class="flex items-center gap-3" href="../ulasan/index.html">
+            <a class="flex items-center gap-3" href="../ulasan/">
               <i data-feather="message-circle"></i>
               <div class="sidebar-text">Ulasan</div>
             </a>
@@ -121,7 +121,7 @@
         <div class="px-4 md:px-8 py-8">
           <div class="flex flex-col lg:justify-between lg:items-center gap-3 pb-8 lg:flex-row  ">
             <h1 class="font-bold text-xl">Semua Menu</h1>
-            <a href="../tambah-kursi/index.html">
+            <a href="../tambah-kursi/">
               <button class="flex bg-primary rounded-md px-4 py-2 text sm mr-auto lg:mr-0 hover:bg-primary/75 font-medium text-white ">
                 <i data-feather="circle" class="text-white text-sm mr-3" ></i> Tambahkan Kursi
               </button>
@@ -141,7 +141,7 @@
                 <!-- End Label -->
                 <div class="flex justify-between items-center flex-wrap gap-3 pt-4">
                   <span class="text-sm text-gray-400 font-semibold">Sewa Rp. 2.000</span>
-                  <a class="flex gap-2 items-center text-sm px-4 py-2 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="../edit-kursi/index.html"><i class="h-5" data-feather="edit-2"></i> Edit</a>
+                  <a class="flex gap-2 items-center text-sm px-4 py-2 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="../edit-kursi/"><i class="h-5" data-feather="edit-2"></i> Edit</a>
                 </div>
               </div>
             </div>
@@ -160,7 +160,7 @@
                 <div class="flex justify-between items-center flex-wrap gap-3 pt-4">
                   <span class="text-sm text-gray-400 font-semibold">Sewa Rp. 2.000</span>
                   <a class="flex gap-2 items-center text-sm px-4 py-2 ml-auto bg-red-800/20 hover:bg-red-800 hover:text-white transition-all duration-300 font-semibold rounded-lg" href="#"><i class="h-5" data-feather="x-circle"></i> Jadikan tersedia</a>
-                  <a class="flex gap-2 items-center text-sm px-4 py-2 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="../edit-kursi/index.html"><i class="h-5" data-feather="edit-2"></i> Edit</a>
+                  <a class="flex gap-2 items-center text-sm px-4 py-2 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="../edit-kursi/"><i class="h-5" data-feather="edit-2"></i> Edit</a>
                 </div>
               </div>
             </div>

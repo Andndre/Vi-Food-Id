@@ -92,7 +92,7 @@
         </div>
         <a
           class="rounded-md px-6 py-3 bg-primary text-white font-bold w-full text-center"
-          href="../sukses/index.html"
+          href="../sukses/"
           >Lanjutkan</a
         >
       </div>

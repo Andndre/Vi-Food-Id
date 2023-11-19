@@ -51,7 +51,7 @@
           >
             <a
               class="flex items-center gap-3"
-              href="../penjual/manajemen-pesanan/index.html"
+              href="../penjual/manajemen-pesanan/"
             >
               <i data-feather="database"></i>
               <div class="sidebar-text">Manajemen Pesanan</div>
@@ -63,7 +63,7 @@
           >
             <a
               class="flex items-center gap-3"
-              href="./manajemen-menu/index.html"
+              href="./manajemen-menu/"
             >
               <i data-feather="book-open"></i>
               <div class="sidebar-text">Manajemen Menu</div>
@@ -75,7 +75,7 @@
           >
             <a
               class="flex items-center gap-3"
-              href="./manajemen-kursi/index.html"
+              href="./manajemen-kursi/"
             >
               <i data-feather="list"></i>
               <div class="sidebar-text">Manajemen Kursi</div>
@@ -85,7 +85,7 @@
             title="Ulasan"
             class="transition-all duration-300 rounded-md px-4 py-2 bg-gray-900"
           >
-            <a class="flex items-center gap-3" href="./ulasan/index.html">
+            <a class="flex items-center gap-3" href="./ulasan/">
               <i data-feather="message-circle"></i>
               <div class="sidebar-text">Ulasan</div>
             </a>

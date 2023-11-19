@@ -49,7 +49,7 @@
             title="Dashboard"
             class="transition-all duration-300 rounded-md px-4 py-2 bg-primary/25 text-primary"
           >
-            <a class="flex items-center gap-3" href="../index.html">
+            <a class="flex items-center gap-3" href="../">
               <i data-feather="loc"></i>
               <div class="sidebar-text">Warung Pak Wayan</div></a
             >
@@ -58,7 +58,7 @@
             title="Dashboard"
             class="transition-all duration-300 rounded-md px-4 py-2 bg-gray-900"
           >
-            <a class="flex items-center gap-3" href="../index.html">
+            <a class="flex items-center gap-3" href="../">
               <i data-feather="loc"></i>
               <div class="sidebar-text">KFC</div></a
             >
@@ -162,7 +162,7 @@
           <span class="">Rp.380.0000</span>
           <a
             class="flex ml-3 bg-gray-200 py-3 px-6 rounded-lg"
-            href="../kursi/index.html"
+            href="../kursi"
             ><i data-feather="shopping-cart" class="mr-3"></i>CHECKOUT (6)</a
           >
         </div>

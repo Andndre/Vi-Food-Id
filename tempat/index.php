@@ -58,7 +58,7 @@
             >Deskripsi</a
           >
           <a
-            href="../tempat-menu/index.html"
+            href="../tempat-menu/"
             class="hover:bg-gray-100 bg-white rounded-tr-md rounded-br-md p-3"
             >Pesan</a
           >
@@ -79,7 +79,7 @@
           </p>
         </div>
         <div class="pt-8"></div>
-        <a href="../tempat-menu/index.html" class="bg-primary text-white rounded-lg px-10 py-3 font-bold"> Makan di sini </a>
+        <a href="../tempat-menu/" class="bg-primary text-white rounded-lg px-10 py-3 font-bold"> Makan di sini </a>
         <hr class="w-full mt-11 border-t border-gray-300">
         <h2 class="font-bold text-xl mt-6">Rating dan Komentar</h2>
         <p class="mt-2 text-gray-500">Berikut adalah kumpulan komentar yang sudah pernah makan di sini</p>

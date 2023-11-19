@@ -110,7 +110,7 @@
 
 							<div class="flex justify-between items-center flex-wrap gap-3 pt-4">
 								<span class="text-lg text-gray-400 font-semibold">Rp. 12.000,00</span>
-								<a class="px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="/tempat/index.html">Lihat</a>
+								<a class="px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="/tempat/">Lihat</a>
 							</div>
 						</div>
 					</div>
@@ -136,7 +136,7 @@
 
 							<div class="flex justify-between items-center flex-wrap gap-3 pt-4">
 								<span class="text-lg text-gray-400 font-semibold">Rp. 12.000,00</span>
-								<a class="px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="/tempat/index.html">Lihat</a>
+								<a class="px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="/tempat/">Lihat</a>
 							</div>
 						</div>
 					</div>
@@ -162,7 +162,7 @@
 
 							<div class="flex justify-between items-center flex-wrap gap-3 pt-4">
 								<span class="text-lg text-gray-400 font-semibold">Rp. 12.000,00</span>
-								<a class="px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="/tempat/index.html">Lihat</a>
+								<a class="px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="/tempat/">Lihat</a>
 							</div>
 						</div>
 					</div>
@@ -188,7 +188,7 @@
 
 							<div class="flex justify-between items-center flex-wrap gap-3 pt-4">
 								<span class="text-lg text-gray-400 font-semibold">Rp. 12.000,00</span>
-								<a class="px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="/tempat/index.html">Lihat</a>
+								<a class="px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="/tempat/">Lihat</a>
 							</div>
 						</div>
 					</div>
@@ -214,7 +214,7 @@
 
 							<div class="flex justify-between items-center flex-wrap gap-3 pt-4">
 								<span class="text-lg text-gray-400 font-semibold">Rp. 12.000,00</span>
-								<a class="px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="/tempat/index.html">Lihat</a>
+								<a class="px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="/tempat/">Lihat</a>
 							</div>
 						</div>
 					</div>
@@ -240,7 +240,7 @@
 
 							<div class="flex justify-between items-center flex-wrap gap-3 pt-4">
 								<span class="text-lg text-gray-400 font-semibold">Rp. 12.000,00</span>
-								<a class="px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="/tempat/index.html">Lihat</a>
+								<a class="px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="/tempat/">Lihat</a>
 							</div>
 						</div>
 					</div>

@@ -37,7 +37,7 @@
 			
 			<a href="../login" type="button" id="register-button" class="bg-black text-white px-8 py-4 rounded-2xl font-bold text-center">Daftar</a>
 			<div class="text-center">
-				<p class="pt-6">Sudah punya akun? <a class="underline text-black font-bold" href="../login/index.html">Masuk</a></p>
+				<p class="pt-6">Sudah punya akun? <a class="underline text-black font-bold" href="../login/">Masuk</a></p>
 			</div>
 		</form>
 	</div>

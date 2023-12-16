@@ -1,5 +1,4 @@
 <?php
-
 require "connection.php";
 
 // Form submit
@@ -22,8 +21,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Set cookie untuk menyimpan username
             setcookie('username', $username, time() + (86400 * 30), '/'); // Cookie berlaku selama 30 hari (30 * 86400 detik)
 
-            // Redirect ke halaman home
-            header("Location: ../home/index.php");
+            // Determine user role (penjual or pembeli)
+            $role = $user['tipe'];
+            // Redirect based on user role
+            if ($role == 'penjual') {
+                header("Location: ../penjual/dashboard/index.php");
+            } elseif ($role == 'pembeli') {
+                header("Location: ../home/index.php");
+            } else {
+                echo "Error: Role tidak valid.";
+            }
             exit();
         } else {
             echo "Error: Password salah.";

@@ -1,9 +1,5 @@
 <?php
-if (!isset($_COOKIE['username'])) {
-  header('Location: ../login/index.php'); 
-  exit();
-}
-
+require "../process/auth-akun.php";
 ?>
 
 <!DOCTYPE html>

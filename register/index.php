@@ -25,6 +25,14 @@
                     placeholder="Username">
                 <i data-feather="user" class="absolute top-0 bottom-0 left-4 h-full"></i>
             </div>
+
+            <div class="mb-4 relative">
+                <input type="text" id="email" name="email"
+                    class="w-full px-8 pl-14 py-4 border-black border-[3px] rounded-2xl bg-transparent"
+                    placeholder="Email">
+                <i data-feather="mail" class="absolute top-0 bottom-0 left-4 h-full"></i>
+            </div>
+
             <div class="mb-4 relative">
                 <input type="password" id="password" name="password"
                     class="w-full px-8 pl-14 py-4 border-black border-[3px] rounded-2xl bg-transparent"

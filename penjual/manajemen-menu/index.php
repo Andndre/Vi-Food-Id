@@ -14,83 +14,10 @@
   </head>
   <body class="bg-gray-200">
     <div class="flex w-full min-h-screen">
-      <aside
-        id="sidebar"
-        class="bg-card-foreground bg-black text-white text-card border-r shadow-xl min-h-screen max-w-[250px] p-4 z-[100] flex flex-col fixed md:static"
-      >
-        <div class="flex flex-col items-center mt-8">
-          <img id="sidebar-logo" src="../../public/logo-white.svg" alt="logo" class="transition-all" width="128px" height="128px"/>
-          <p class="font-medium sidebar-text">
-            Warung Pak Wayan
-          </p>
-        </div>
-        <div
-          data-orientation="horizontal"
-          role="none"
-          class="shrink-0 bg-border h-[1px] w-full my-4"
-        ></div>
-        <ul class="space-y-1 flex-1 text-gray-300">
-          <li
-            title="Dashboard"
-            class="transition-all duration-300 rounded-md px-4 py-2 bg-gray-900"
-          >
-            <a class="flex items-center gap-3" href="../">
-							<i data-feather="bar-chart-2"></i>
-              <div class="sidebar-text">Dashboard</div></a
-            > 
-          </li>
-
-          <li
-          title="Manajemen Pesanan"
-          class="transition-all duration-300 rounded-md px-4 py-2 bg-gray-900">
-          <a class="flex items-center gap-3" href="/penjual/manajemen-pesanan/">
-            <i data-feather="database"></i>
-            <div class="sidebar-text">Manajemen Pesanan</div>
-          </a>
-        </li>
-          <li
-            title="Manajemen Menu"
-            class="transition-all duration-300 rounded-md px-4 py-2 bg-primary/25 text-primary"
-          >
-            <a class="flex items-center gap-3" href="#">
-              <i data-feather="book-open"></i>
-							<div class="sidebar-text">Manajemen Menu</div>
-						</a>
-          </li>
-          <li
-            title="Manajemen Kursi"
-            class="transition-all duration-300 rounded-md px-4 py-2 bg-gray-900"
-          >
-            <a class="flex items-center gap-3" href="../manajemen-kursi/">
-              <i data-feather="list"></i>
-							<div class="sidebar-text">Manajemen Kursi</div>
-						</a>
-          </li>
-          <li
-            title="Ulasan"
-            class="transition-all duration-300 rounded-md px-4 py-2 bg-gray-900"
-          >
-            <a class="flex items-center gap-3" href="../ulasan/">
-              <i data-feather="message-circle"></i>
-							<div class="sidebar-text">Ulasan</div>
-						</a>
-          </li>
-        </ul>
-        <div>
-          <div
-            data-orientation="horizontal"
-            role="none"
-            class="shrink-0 bg-border h-[1px] w-full my-4"
-          ></div>
-          <button
-            id="sidebar-tutup"
-            class="duration-300 bg-gray-900 transition-all rounded-md p-2 flex gap-3 w-full"
-          >
-            <i data-feather="arrow-left"></i>
-            <span class="sidebar-text">Tutup</span>
-          </button>
-        </div>
-      </aside>
+    <?php 
+      $_GET['highlight'] = "manajemen-menu";
+      require "../../components/sidebar-penjual.php" 
+    ?>
       <div class="flex-1 flex flex-col">
         <header class="flex justify-end shadow-sm border-b px-4 lg:px-8 py-2">
           <div class="flex items-center gap-3">
@@ -153,25 +80,7 @@
         </div>
       </div>
     </div>
-    <script>
-      // Logika untuk sidebar
-      const tombolClose = $('#sidebar-tutup');
-      const sidebar = $('#sidebar');
-      const sidebarLogo = $('#sidebar-logo');
-      const sidebarTexts = $('.sidebar-text');
-      
-      tombolClose.click(() => {
-        sidebarTexts.each((i, e) => {
-          e.classList.toggle('hidden');
-        });
-        sidebar.toggleClass('fixed');
-        sidebarLogo.toggleClass("w-16 h-16");
-        sidebarLogo.toggleClass("w-7 h-7");
-      });
-
-      // Feather icon... 
-      feather.replace();
-    </script>
+   
     <style>
       .hidden {
         display: none;

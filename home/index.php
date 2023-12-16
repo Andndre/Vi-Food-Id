@@ -9,7 +9,7 @@ require "../process/auth-akun.php";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VI Food</title>
-    <link rel="stylesheet" href="../css/dist/output.css" />
+    <link rel="stylesheet" href="../../assets/css/dist/output.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous"></script>
@@ -21,7 +21,7 @@ require "../process/auth-akun.php";
     <!-- Navbar -->
     <nav class="bg-white shadow-sm">
         <div class="flex items-center h-16 justify-between w-full gap-6 container mx-auto px-4">
-            <a href="/"><img src="../public/logo.svg" alt="logo" class="h-5" /></a>
+            <a href="/"><img src="../assets/images/logo.svg" alt="logo" class="h-5" /></a>
             <div class="flex gap-4 items-center">
                 <div class="flex gap-3 items-center">
                     <a class="flex gap-2 items-center px-6 py-3 bg-primary/10 hover:bg-primary/25 transition-all duration-300 rounded-md"

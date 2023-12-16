@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VI Food</title>
-    <link rel="stylesheet" href="./css/dist/output.css" />
+    <link rel="stylesheet" href="./assets/css/dist/output.css" />
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"
       integrity="sha512-A7AYk1fGKX6S2SsHywmPkrnzTZHrgiVT7GcQkLGDe2ev0aWb8zejytzS8wjo7PGEXKqJOrjQ4oORtnimIRZBtw=="
@@ -29,14 +29,14 @@
       <div
         class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <img
-            src="./public/logo.svg"
+            src="./assets/images/logo.svg"
             class="h-4"
             alt="Vi-Food Logo"
           />
       
         </a>
         <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <a href="./login/">
+          <a href="akun/login">
             
             <button
               type="button"
@@ -51,7 +51,6 @@
             aria-controls="navbar-sticky"
             aria-expanded="false"
           >
-            
             <i data-feather="menu"></i>
           </button>
         </div>
@@ -107,7 +106,7 @@
         data-aos="fade-up"
         class="space-y-3 flex flex-col items-center mx-auto lg:items-start"
       >
-        <img src="./public/logo.svg" alt="logo" class="h-5" />
+        <img src="assets/images/logo.svg" alt="logo" class="h-5" />
         <h1 class="font-bold text-4xl">Sistem Pelayanan Khusus Tempat Makan</h1>
         <p>
           VI-Food memudahkan pemesanan makanan dan tempat makan dengan sistem
@@ -121,7 +120,7 @@
         >
       </div>
       <div class="hidden lg:block self-start">
-        <img src="./public/hero-image.png" alt="" class="max-h-[80vh]" />
+        <img src="./assets/images/hero-image.png" alt="" class="max-h-[80vh]" />
       </div>
     </div>
     <!-- Tentang Kami -->
@@ -131,7 +130,7 @@
       class="flex flex-col-reverse justify-center container mx-auto px-4 lg:px-12 max-w-5xl min-h-screen text-center lg:items-center lg:text-start lg:flex-row"
     >
       <img
-        src="./public/about-us.png"
+        src="./assets/images/about-us.png"
         alt=""
         class="max-h-[80vh] mx-7 lg:max-w-[50%] lg:m-0"
       />
@@ -159,7 +158,7 @@
       <div class="flex flex-wrap justify-center gap-4">
         <div class="space-y-3 text-center">
           <img
-            src="./public/layanan-1.png"
+            src="./assets/images/layanan-1.png"
             alt=""
             class="md:w-[300px] lg-w-[200px]"
           />
@@ -167,7 +166,7 @@
         </div>
         <div class="space-y-3 text-center">
           <img
-            src="./public/layanan-2.png"
+            src="./assets/images/layanan-2.png"
             alt=""
             class="md:w-[300px] lg-w-[200px]"
           />
@@ -175,7 +174,7 @@
         </div>
         <div class="space-y-3 text-center">
           <img
-            src="./public/layanan-3.png"
+            src="./assets/images/layanan-3.png"
             alt=""
             class="md:w-[300px] lg-w-[200px]"
           />
@@ -183,7 +182,7 @@
         </div>
         <div class="space-y-3 text-center">
           <img
-            src="./public/layanan-4.png"
+            src="./assets/images/layanan-4.png"
             alt=""
             class="md:w-[300px] lg-w-[200px]"
           />
@@ -198,7 +197,7 @@
         <h2 class="font-bold text-3xl text-center">
           Santai saja dalam perjalanan anda, kursi anda kami yang jaga
           <span class="inline-block"
-            ><img class="h-6" src="./public/cup.png" alt=""
+            ><img class="h-6" src="./assets/images/cup.png" alt=""
           /></span>
         </h2>
         <div class="grid grid-cols-12 gap-3">
@@ -207,7 +206,7 @@
           >
             <img
               class="w-28 sm:w-32 md:w-36 lg:w-40"
-              src="./public/landing-1.png"
+              src="./assets/images/landing-1.png"
               alt=""
             />
             <p>
@@ -220,7 +219,7 @@
           >
             <img
               class="w-28 sm:w-32 md:w-36 lg:w-40"
-              src="./public/landing-2.png"
+              src="./assets/images/landing-2.png"
               alt=""
             />
             <p>Kunjungi tempat makan favorit anda</p>
@@ -230,7 +229,7 @@
           >
             <img
               class="w-28 sm:w-32 md:w-36 lg:w-40"
-              src="./public/landing-3.png"
+              src="./assets/images/landing-3.png"
               alt=""
             />
             <p>Transaksi lebih mudah dengan E-Wallet</p>
@@ -240,7 +239,7 @@
           >
             <img
               class="w-28 sm:w-32 md:w-36 lg:w-40"
-              src="./public/landing-4.png"
+              src="./assets/images/landing-4.png"
               alt=""
             />
             <p>Nikmati perjalanan anda</p>
@@ -259,14 +258,14 @@
           Tertarik? Ayo buruan mulai!
         </h2>
         <a
-          href="./Pilihan_Register"
+          href="akun/daftar"
           class="px-8 py-3 bg-primary text-white rounded-lg font-bold hover:bg-primary/70"
           >Mulai</a
         >
       </div>
     </section>
 
-    <?php require "components/footer.php"?>
+    <?php require "module/components/footer.php"?>
     <script>
       AOS.init();
       feather.replace();

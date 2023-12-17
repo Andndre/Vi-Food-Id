@@ -6,8 +6,26 @@ if (!isset($_SESSION)) {
 	session_start();
 }
 
+if (isset($_SESSION['username'])) {
+	$role = $_SESSION['role'];
+	switch ($role) {
+		case 'penjual':
+			header("Location: /vi-food-id/admin/penjual/dashboard/index.php");
+			break;
+		case 'pembeli':
+			header("Location: /vi-food-id/home/index.php");
+			break;
+		default:
+			echo "Error: Peran tidak valid.";
+			break;
+	}
+}
+
 if (!defined('ROOT'))
     define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/vi-food-id');
+
+$_GET['title'] = 'Login ke Akun Anda - VI-Food';
+
 require ROOT . "/module/components/head.php";
 
 ?>

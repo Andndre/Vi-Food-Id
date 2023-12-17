@@ -1,10 +1,17 @@
+<?php
+if (!defined('ROOT')) define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/vi-food-id');
+
+session_start();
+include ROOT . "/module/backend/akun/cek-login.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <?php
   if (!defined('ROOT'))
     define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/vi-food-id');
   $_GET['title'] = 'Keranjang Saya';
-  require ROOT . "/module/components/head-normal.php";
+  require ROOT . "/module/components/head.php";
   ?>
   <body class="bg-gray-200">
     <!-- Navbar -->
@@ -144,5 +151,6 @@
     <script>
       feather.replace();
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>	
   </body>
 </html>

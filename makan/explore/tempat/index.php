@@ -6,28 +6,50 @@ if (!defined('ROOT')) {
 require_once ROOT . "/module/backend/akun/cek-login.php";
 require_once ROOT . "/module/backend/database/connection.php";
 
-$id = $_GET['id'];
+// Periksa apakah parameter 'id' ada dalam URL
+if(isset($_GET['slug'])) {
+	$slug = $_GET['slug'];
 
-function getAllCommentsById($slug) {
-	$koneksi = getDb();
-	$query = "SELECT um.id AS ulasan_id, um.id_menu, um.pengirim, um.bintang, um.isi AS ulasan_isi, gu.href AS gambar_ulasan_href FROM ulasan_menu AS um JOIN menu AS m ON um.id_menu = m.id JOIN tempat_makan AS tm ON m.tempat_makan = tm.username LEFT JOIN gambar_ulasan AS gu ON um.id = gu.id_ulasan WHERE tm.slug = '?'";
+	function getAllCommentsById($slug) {
+		$koneksi = getDb();
+		// Query untuk mendapatkan semua komentar pada semua menu dari tempat makan
+		$query = "SELECT um.id AS ulasan_id,
+				um.id_menu,
+				um.pengirim,
+				um.bintang,
+				um.isi AS ulasan_isi,
+				GROUP_CONCAT(gu.href) AS gambar_ulasan_href
+			FROM ulasan_menu AS um
+			JOIN menu AS m ON um.id_menu = m.id
+			JOIN tempat_makan AS tm ON m.tempat_makan = tm.username
+			LEFT JOIN gambar_ulasan AS gu ON um.id = gu.id_ulasan
+			WHERE tm.slug = ?
+			GROUP BY um.id, um.id_menu, um.pengirim, um.bintang, um.isi;";
 
-	$stmt = $koneksi->prepare($query);
-	var_dump($stmt);
-	$stmt->bind_param('s', $slug);
-	if ($stmt->execute()) {
-		$result = $stmt->get_result();
-		$data = $result->fetch_all(MYSQLI_ASSOC);
-		var_dump($data);
-		exit();
-		return $data;
-	} else {
-		echo "Error executing query: " . $stmt->error;
-		exit();
+		$stmt = $koneksi->prepare($query);
+
+		if (!$stmt) {
+			echo "Error preparing statement: " . $koneksi->error;
+			exit();
+		}
+
+		$stmt->bind_param("s", $slug);
+
+		if (!$stmt->execute()) {
+			echo "Error executing statement: " . $stmt->error;
+			exit();
+		} else {
+			$result = $stmt->get_result();
+			$comments = $result->fetch_all(MYSQLI_ASSOC);
+			return $comments;
+		}
 	}
-}
 
-getAllCommentsById('warung-adit');
+	// Panggil fungsi getAllCommentsById() dengan parameter $id
+	$comments = getAllCommentsById($slug);
+} else {
+	echo "Parameter 'id' tidak ditemukan dalam URL.";
+}
 ?>
 
 <!DOCTYPE html>

@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="/vi-food-id/assets/css/dist/output.css">
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.js"></script>
-</head>
-
+<?php 
+if (!defined('ROOT')) define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/vi-food-id');
+$_GET['title'] = 'Daftar Akun Pembeli - VI-Food';
+require ROOT . "/module/components/head.php";
+?>
 <body>
     <div class="relative">
         <img class="hidden lg:block absolute w-screen h-screen -z-10 object-cover object-right"

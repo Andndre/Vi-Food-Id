@@ -34,16 +34,59 @@ function getOldValue($username) {
 	exit();
 }
 
+function getAllUlasan() {
+	$query = "SELECT
+		um.id AS ulasan_id,
+		um.pengirim AS username_pengirim,
+		akun_pengirim.image AS pengirim_image,
+		tm.nama_tempat_makan,
+		tm.slug AS tempat_makan_slug,
+		m.id AS menu_id,
+		um.isi AS ulasan_isi,
+		um.bintang,
+		GROUP_CONCAT(gu.href) AS gambar_ulasan_href,
+		akun_tempat_makan.image AS tempat_makan_image
+	FROM ulasan_menu AS um
+	JOIN menu AS m ON um.id_menu = m.id
+	JOIN tempat_makan AS tm ON m.tempat_makan = tm.username
+	JOIN akun AS akun_tempat_makan ON tm.username = akun_tempat_makan.username
+	JOIN akun AS akun_pengirim ON um.pengirim = akun_pengirim.username
+	LEFT JOIN gambar_ulasan AS gu ON um.id = gu.id_ulasan
+	GROUP BY um.id, um.pengirim, akun_pengirim.image, tm.nama_tempat_makan, tm.slug, m.id, um.isi, um.bintang, akun_tempat_makan.image
+	ORDER BY um.bintang DESC;";
+	
+	$koneksi = getDb();
+	$ulasan = $koneksi->query($query);
+
+	if ($ulasan->num_rows > 0) {
+		return $ulasan;
+	} else {
+		return false;
+	}
+}
+
 $user = getOldValue($username);
 $user_image = $user['image'] ? "/vi-food-id/uploads/" . $user['image'] : "/vi-food-id/assets/images/profile.png";
+
+$allUlasan = getAllUlasan();
 ?>
 
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 
-<?php 
-$_GET['title'] = "Home";
-require ROOT . "/module/components/head.php"?>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - VI Food</title>
+    <link rel="stylesheet" href="/vi-food-id/assets/css/dist/output.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.js"></script>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.css"  rel="stylesheet" />
+  </head>
 
 <body class="bg-gray-200 pb-6">
     <!-- Navbar -->
@@ -57,7 +100,7 @@ require ROOT . "/module/components/head.php"?>
             <div class="rounded-lg pt-4 flex items-center gap-3">
               <!-- ucapatan selamat end -->
               <!-- baground -->
-                <img class="w-10 h-10 rounded-full" src="<?= $user_image?>"
+                <img class="w-10 h-10 rounded-full object-cover" src="<?= $user_image?>"
 									alt="Rounded avatar" />
 									<!-- Background end -->
                 <form class="flex-1">
@@ -85,115 +128,99 @@ require ROOT . "/module/components/head.php"?>
                 </form>
             </div>
             <p class="font-bold">Ulasan teratas</p>
-            <div class="rounded-lg bg-white">
-                <div class="flex gap-3 p-4">
-                    <img class="w-10 h-10 rounded-full"
-											src="https://sribu-2022.s3.amazonaws.com/assets/media/contest_detail/2016/7/desain-logo-untuk-rumah-makan-sentral-57845f43ca6bcb8bcc000006/e8725fac2f.png"
-											alt="Rounded avatar" />
-                    <div class="space-y-2">
-											<span class="font-bold">Warung Pak Wayan</span>
-											<div class="flex gap-1">
-												<svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-													fill="currentColor" viewBox="0 0 22 20">
-													<path
-														d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-												</svg>
-												<svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-													fill="currentColor" viewBox="0 0 22 20">
-													<path
-														d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-												</svg>
-												<svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-													fill="currentColor" viewBox="0 0 22 20">
-													<path
-														d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-												</svg>
-												<svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-													fill="currentColor" viewBox="0 0 22 20">
-													<path
-														d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-												</svg>
-												<svg class="w-4 h-4 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-													fill="currentColor" viewBox="0 0 22 20">
-													<path
-														d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-												</svg>
+            <div class="space-y-3">
+							<?php 
+							while ($ulasan = $allUlasan->fetch_assoc()): 
+							$gambarTempatMakan = $ulasan['pengirim_image'] ? '/vi-food-id/uploads/' . $ulasan['pengirim_image'] : "/vi-food-id/assets/images/profile.png";?>
+							<div class="rounded-lg bg-white">
+									<div class="flex gap-3 p-4">
+											<img class="w-10 h-10 aspect-square object-cover rounded-full"
+												src="<?= $gambarTempatMakan ?>"
+												alt="Rounded avatar" />
+											<div class="space-y-2">
+												<div>
+													<span class="font-bold"><?= $ulasan['username_pengirim'] ?></span>
+													<span>berbelanja di</span>
+													<span class="font-bold"><?= $ulasan['nama_tempat_makan'] ?></span>
+												</div>
+												<div class="flex gap-1">
+													<?php for ($i = 0; $i < $ulasan['bintang']; $i++): ?>
+													<svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+														fill="currentColor" viewBox="0 0 22 20">
+														<path
+															d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+													</svg>
+													<?php endfor; ?>
+													<?php for ($i = 0; $i < 5 - $ulasan['bintang']; $i++): ?>
+													<svg class="w-4 h-4 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+														fill="currentColor" viewBox="0 0 22 20">
+														<path
+															d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+													</svg>
+													<?php endfor; ?>
+												</div>
+												<p class="pt-2 text-sm">
+													<span class="font-bold">Oleh </span>
+													<span><?= $ulasan['username_pengirim'] ?></span>
+												</p>
+												<p>
+													<?= $ulasan['ulasan_isi'] ?>
+												</p>
 											</div>
-											<p class="pt-2 text-sm">
-												<span class="font-bold">Oleh </span>
-												<a class="underline" href="#">Andndre</a>
-											</p>
-											<p>
-												Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis
-												fuga libero eius nesciunt mollitia cumque molestias sequi rerum
-												aliquam saepe.
-											</p>
-                    </div>
-                </div>
-                <div id="controls-carousel" class="relative w-full" data-carousel="static">
-                    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-													<img src="https://wanderluxe.s3-ap-southeast-1.amazonaws.com/wp-content/uploads/2016/04/revolver1.jpg"
-														class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-														alt="..." />
-                        </div>
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-													<img src="https://postcardsfromhawaii.co/wp-content/uploads/2018/11/header-1.jpg"
-														class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-														alt="..." />
-                        </div>
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-													<img src="https://static.thehoneycombers.com/wp-content/uploads/sites/4/2022/02/Cafe-Organic-Restaurant-in-Seminyak-Bali-900x643.jpg"
-														class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-														alt="..." />
-                        </div>
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-													<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9G9mju8U1GNUqPCHueV1phtaOWmSFXLPaWg&usqp=CAU"
-														class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-														alt="..." />
-                        </div>
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-													<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrfEyTm2XH2FZrFaUIbJhnrWl9AwNX1jQbpw&usqp=CAU"
-														class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-														alt="..." />
-                        </div>
-                    </div>
-                    <button type="button"
-											class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-											data-carousel-prev>
-											<span
-												class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
-												<svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true"
-													xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-													<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-														stroke-width="2" d="M5 1 1 5l4 4" />
-												</svg>
-											</span>
-                    </button>
-                    <button type="button"
-                        class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                        data-carousel-next>
-                        <span
-                            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m1 9 4-4-4-4" />
-                            </svg>
-                            <span class="sr-only">Next</span>
-                        </span>
-                    </button>
-                </div>
-                <div class="p-3"><a href="../tempat/"
-                        class="w-full border-2 border-primary text-center py-3 block text-primary hover:text-white hover:bg-primary rounded-lg">Kunjungi
-                        Tempat Makan</a></div>
-            </div>
+									</div>
+									<?php if ($ulasan['gambar_ulasan_href']): 
+										$gambarUlasan = explode(',', $ulasan['gambar_ulasan_href']);
+									?>	
+										<div id="controls-carousel" class="relative w-full" data-carousel="static">
+												<div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+												<?php foreach ($gambarUlasan as $key => $value): 
+														$gambar = '/vi-food-id/uploads/' . $value;
+														$isActive = ($key === 0) ? 'active' : '';
+												?>
+												<div class="hidden duration-700 ease-in-out" data-carousel-item="<?= $isActive ?>">
+														<img src="<?= $gambar ?>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
+												</div>
+												<?php endforeach; ?>
+											</div>
+											<button type="button"
+												class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+												data-carousel-prev>
+												<span
+													class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+													<svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true"
+														xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+														<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+															stroke-width="2" d="M5 1 1 5l4 4" />
+													</svg>
+												</span>
+											</button>
+											<button type="button"
+													class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+													data-carousel-next>
+													<span
+															class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+															<svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true"
+																xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+																<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+																	stroke-width="2" d="m1 9 4-4-4-4" />
+															</svg>
+															<span class="sr-only">Next</span>
+													</span>
+											</button>
+									</div>
+									<?php endif; ?>
+									<div class="p-3"><a href="../makan/explore/tempat?slug=<?= $ulasan['tempat_makan_slug'] ?>"
+										class="w-full border-2 border-primary text-center py-3 block text-primary hover:text-white hover:bg-primary rounded-lg">Kunjungi
+										Tempat Makan</a></div>
+							</div>
+							<?php endwhile; ?>
+						</div>
         </div>
         <div class="col-span-12 md:col-span-5 lg:col-span-3 ">
             <div class="bg-white p-4 rounded-lg sticky top-4">
                 <h2 class="font-bold text-lg">Home</h2>
                 <div class="pt-3"></div>
-                <p class="text-sm">Halo, Andre! ini adalah rekomendasi anda berdasarkan beberapa informasi berikut:
+                <p class="text-sm">Halo, <?= $_SESSION['username']?>! ini adalah rekomendasi anda berdasarkan beberapa informasi berikut:
                     Lokasi dan History pemesanan.</p>
                 <p class="text-sm pt-3">Jika anda ingin mendapatkan rekomendasi yang lebih akurat, anda bisa mengupdate
                     Lokasi anda di Pengaturan</p>
@@ -207,6 +234,14 @@ require ROOT . "/module/components/head.php"?>
     feather.replace();
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.js"></script>
+		<script>
+			navigator.geolocation.getCurrentPosition(function (position) {
+				var lat = position.coords.latitude;
+				var lon = position.coords.longitude;
+
+
+			});
+		</script>
 </body>
 
 </html>

@@ -31,7 +31,7 @@
 					<ul class="text-gray-500 font-medium">
 						<li class="mb-4">
 							<a
-								href="https://github.com/Andndre/VI-Food"
+								href="https://github.com/Andndre/VI-Food-Id"
 								class="hover:underline"
 								>Github</a
 							>

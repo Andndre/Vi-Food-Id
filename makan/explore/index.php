@@ -5,7 +5,7 @@ define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/vi-food-id');
 require_once ROOT . '/module/backend/akun/cek-login.php';
 require_once ROOT . '/module/backend/database/connection.php';
 
-$queryMenu = "SELECT * FROM menu";
+$queryMenu = "SELECT * FROM tempat_makan";
 $semua_menu = $koneksi->query($queryMenu);
 ?>
 
@@ -98,12 +98,10 @@ require ROOT . "/module/components/head.php";
 							<div class="overflow-hidden col-span-12 md:col-span-6 lg:col-span-4 bg-white rounded-2xl shadow-sm">
 								<img class="w-full aspect-video object-cover" src='<?= '/vi-food-id/uploads/' . $row['gambar'] ?>' alt="">
 								<div class="p-4 space-y-2 text-sm">
-									<h3 class="font-bold text-xl"><?= $row['nama'] ?><h3>
+									<h3 class="font-bold text-xl"><?= $row['nama_tempat_makan'] ?><h3>
 									<div class="flex justify-between items-center flex-wrap gap-3 pt-4">
-										<span
-												class="text-lg text-gray-400 font-semibold"><?= 'Rp.' . number_format($row['harga'], 0, ',', '.') ?></span>
 										<a class="px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg"
-												href="tempat?id=<?= $row['id'] ?>">Lihat</a>
+											href="tempat?slug=<?= $row['slug'] ?>">Lihat</a>
 									</div>
 								</div>
 							</div>

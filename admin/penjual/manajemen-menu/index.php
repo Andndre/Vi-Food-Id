@@ -26,7 +26,6 @@ function getAllMenu($tempatMakan) {
 $menu = getAllMenu($tempatMakan);
 ?>
 
-
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
   <?php require ROOT . "/module/components/head.php" ?>
@@ -41,29 +40,28 @@ $menu = getAllMenu($tempatMakan);
         <div class="px-4 md:px-8 py-8 ">
           <div class="flex flex-col lg:justify-between lg:items-center gap-3 pb-8 lg:flex-row  ">
             <h1 class="font-bold text-xl">Semua Menu</h1>
-              <a href="../tambah-menu/" class="flex bg-primary  rounded-md px-4 py-2 text sm mr-auto lg:mr-0 hover:bg-orange-700 font-medium text-white ">
+              <a href="tambah/" class="flex bg-primary  rounded-md px-4 py-2 text sm mr-auto lg:mr-0 hover:bg-orange-700 font-medium text-white ">
                 <i data-feather="plus" class="text-white text-sm mx-1" ></i> 
                 Tambah Menu
               </a>
           </div>
-
           <div class="grid grid-cols-12 gap-4">
-							<!-- Card Start -->
-              <?php while ($row = $menu->fetch_assoc()): ?>
-							<div class="overflow-hidden col-span-12 md:col-span-6 lg:col-span-4 bg-white rounded-2xl shadow-sm">
-								<img class="w-full object-cover aspect-video" src="/vi-food-id/uploads/<?= $row['gambar'] ?>" alt=""/>
-								<div class="p-4 space-y-2">
-									<h3 class="font-bold text-xl"><?= $row['nama'] ?><h3>
-									<div class="flex justify-between items-center flex-wrap gap-3 pt-4">
-										<span class="text-lg text-gray-400 font-semibold"><?= $row['harga'] ?></span>
-										<a class="flex gap-2 items-center px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="../edit-menu?id=<?= $row['id'] ?>"><i class="h-5" data-feather="edit-2"></i> Edit</a>
-									</div>
+						<!-- Card Start -->
+						<?php while ($row = $menu->fetch_assoc()): ?>
+						<div class="overflow-hidden col-span-12 md:col-span-6 lg:col-span-4 bg-white rounded-2xl shadow-sm">
+							<img class="w-full object-cover aspect-video" src="/vi-food-id/uploads/<?= $row['gambar'] ?>" alt=""/>
+							<div class="p-4 space-y-2">
+								<h3 class="font-bold text-xl"><?= $row['nama'] ?><h3>
+								<div class="flex justify-between items-center flex-wrap gap-3 pt-4">
+									<span class="text-lg text-gray-400 font-semibold"><?= $row['harga'] ?></span>
+									<a class="flex gap-2 items-center px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="edit?id=<?= $row['id'] ?>"><i class="h-5" data-feather="edit-2"></i> Edit</a>
 								</div>
 							</div>
-              <?php 
-                endwhile; 
-                $menu->free_result();
-              ?>
+						</div>
+						<?php 
+							endwhile; 
+							$menu->free_result();
+						?>
 						</div>
 					</div>
 					<!-- Konten -->

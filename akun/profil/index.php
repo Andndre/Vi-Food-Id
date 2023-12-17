@@ -6,6 +6,9 @@
 	if (!defined('ROOT')) {
 		define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/vi-food-id');
 	}
+	
+	$_GET['title'] = 'Profil Saya';
+
 	require ROOT . '/module/backend/akun/cek-login.php';
 	require ROOT . '/module/backend/database/connection.php';
 	require ROOT . '/module/components/head.php'; 
@@ -106,10 +109,7 @@
 											type="text"
 											class="flex h-10 w-full rounded-md border 
 											px-3 py-2 text-sm 
-											outline-none
-											focus-visible:ring-primary
-											focus-visible:ring-2 
-											focus-visible:ring-offset-4"
+											outline-none bg-gray-200 text-gray-800 cursor-not-allowed pointer-events-none"
 											placeholder="Username"
 											disabled=""
 											name="username"

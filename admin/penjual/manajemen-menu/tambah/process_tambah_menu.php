@@ -35,7 +35,7 @@ $gambarMenu = $targetDir . basename($_FILES["gambar-menu"]["name"]);
 move_uploaded_file($_FILES["gambar-menu"]["tmp_name"], $gambarMenu);
 
 // Mendapatkan username dari cookie
-$tempatMakan = $_COOKIE['username']; 
+$tempatMakan = $_SESSION['username']; 
 
 // Panggil fungsi untuk menambahkan menu
 tambahMenu($tempatMakan, $namaMakanan, basename($_FILES["gambar-menu"]["name"]), $hargaMakanan, $deskripsiMakanan, $koneksi);

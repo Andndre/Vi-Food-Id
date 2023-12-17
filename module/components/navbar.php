@@ -18,17 +18,17 @@ function getUserByUsername ($username) {
 }
 
 $user = getUserByUsername($username);
-
+$user_image = $user['image'] ? '/vi-food-id/uploads/' . $user['image'] : '/vi-food-id/assets/images/profile.png';
 ?>
 
 <nav class="bg-white border-gray-200 ">
   <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
 		<a href="/vi-food-id/" class="flex items-center space-x-3 ">
 				<img src="/vi-food-id/assets/images/logo.svg" class="h-4" alt="Logo VI-Food" />
-		</a>
+			</a>
 		<div class="flex items-center md:order-2 space-x-3 md:space-x-0 ">
-				<button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 " id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-					<img class="w-8 h-8 rounded-full" src="/vi-food-id/assets/images/profile.png" alt="user photo">
+			<button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 " id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+					<img class="w-8 h-8 rounded-full object-cover" src="<?= $user_image ?>" alt="user photo">
 				</button>
 				<!-- Dropdown menu -->
 				<div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow  " id="user-dropdown">
@@ -40,6 +40,11 @@ $user = getUserByUsername($username);
 						<li>
 							<a href="/vi-food-id/akun/profil" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   ">Profil</a>
 						</li>
+						<?php if ($_SESSION['role'] === 'penjual') : ?>
+							<li>
+								<a href="/vi-food-id/admin/penjual/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   ">Dashboard</a>
+							</li>
+						<?php endif; ?>
 						<li>
 							<a href="/vi-food-id/my/keranjang/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   ">Keranjang</a>
 						</li>
@@ -47,7 +52,10 @@ $user = getUserByUsername($username);
 							<a href="/vi-food-id/my/pembelian" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   ">Pembelian</a>
 						</li>
 						<li>
-							<a href="/vi-food-id/akun/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100   ">Keluar</a>
+							<hr>
+						</li>
+						<li>
+							<a href="/vi-food-id/akun/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-red-200">Keluar</a>
 						</li>
 					</ul>
 				</div>

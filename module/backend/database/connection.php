@@ -1,11 +1,18 @@
 <?php
 
-$host = "localhost";
-$password = "";
-$username = "root";
-$database = "vi-food";
-$koneksi = mysqli_connect($host, $username, $password, $database); 
+function getDb() {
+	static $db;
 
-if ($koneksi->connect_error) {
-	die("Error: gagal menghubungkan ke database: " . $koneksi->connect_error);
+	if($db === null) {		
+		$host = "localhost";
+		$password = "";
+		$username = "root";
+		$database = "vi-food";
+		$koneksi = mysqli_connect($host, $username, $password, $database); 
+		$db = $koneksi;
+	}
+	
+	return $db;
 }
+
+$koneksi = getDb();

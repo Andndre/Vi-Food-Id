@@ -1,62 +1,46 @@
-<?php 
-require "../../../module/backend/database/connection.php";
+<?php
+if (!defined('ROOT'))
+  define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/vi-food-id');
+require ROOT . "/module/backend/akun/cek-penjual.php";
+require_once ROOT . "/module/backend/database/connection.php";
 
 session_start();
 $tempatMakan = $_SESSION['username'];
 
-$query = "SELECT * FROM menu WHERE tempat_makan = ?";
-$stmt = $koneksi->prepare($query);
-$stmt->bind_param("s", $tempatMakan);
-
-if ($stmt->execute()) {
-    $result = $stmt->get_result();
-} else {
-    // Handle query execution error
-    echo "Error executing query: " . $stmt->error;
+function getAllMenu($tempatMakan) {
+	$queryMenu = "SELECT * FROM menu WHERE tempat_makan = ?";
+	$koneksi = getdb();
+	$stmtMenu = $koneksi->prepare($queryMenu);
+	$stmtMenu->bind_param("s", $tempatMakan);
+	
+	if ($stmtMenu->execute()) {
+			$menu = $stmtMenu->get_result();
+			return $menu;
+	} else {
+			// Handle query execution error
+			echo "Error executing query: " . $stmtMenu->error;
+			exit();
+	}
 }
+
+$menu = getAllMenu($tempatMakan);
 ?>
 
 
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VI Food</title>
-    <link rel="stylesheet" href="../../../assets/css/dist/output.css" />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.js"></script>
-  </head>
+  <?php require ROOT . "/module/components/head.php" ?>
   <body class="bg-gray-200">
     <div class="flex w-full min-h-screen">
       <?php 
         $_GET['highlight'] = "manajemen-menu";
-        require "../../../module/components/sidebar-penjual.php" 
+      require ROOT . "/module/components/sidebar-penjual.php";
       ?>
       <div class="flex-1 flex flex-col">
-        <header class="flex justify-end shadow-sm border-b px-4 lg:px-8 py-2">
-          <div class="flex items-center gap-3">
-            <a href="../../profil/">
-              <span
-                class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full cursor-pointer"
-                type="button"
-                ><img
-                  class="aspect-square h-full w-full"
-                  alt="user avatar"
-                  src="https://avatars.githubusercontent.com/u/81848639?v=4"
-              /></span>
-            </a>
-          </div>  
-        </header>
-				<!-- Konten -->
+				<?php require ROOT . "/module/components/navbar.php";?>
         <div class="px-4 md:px-8 py-8 ">
           <div class="flex flex-col lg:justify-between lg:items-center gap-3 pb-8 lg:flex-row  ">
             <h1 class="font-bold text-xl">Semua Menu</h1>
-           
               <a href="../tambah-menu/" class="flex bg-primary  rounded-md px-4 py-2 text sm mr-auto lg:mr-0 hover:bg-orange-700 font-medium text-white ">
                 <i data-feather="plus" class="text-white text-sm mx-1" ></i> 
                 Tambah Menu
@@ -65,9 +49,9 @@ if ($stmt->execute()) {
 
           <div class="grid grid-cols-12 gap-4">
 							<!-- Card Start -->
-              <?php while ($row = $result->fetch_assoc()): ?>
+              <?php while ($row = $menu->fetch_assoc()): ?>
 							<div class="overflow-hidden col-span-12 md:col-span-6 lg:col-span-4 bg-white rounded-2xl shadow-sm">
-								<img class="w-full object-cover aspect-video" src="../../../uploads/<?= $row['gambar'] ?>" alt="">
+								<img class="w-full object-cover aspect-video" src="/vi-food-id/uploads/<?= $row['gambar'] ?>" alt=""/>
 								<div class="p-4 space-y-2">
 									<h3 class="font-bold text-xl"><?= $row['nama'] ?><h3>
 									<div class="flex justify-between items-center flex-wrap gap-3 pt-4">
@@ -78,7 +62,7 @@ if ($stmt->execute()) {
 							</div>
               <?php 
                 endwhile; 
-                $result->free_result();
+                $menu->free_result();
               ?>
 						</div>
 					</div>
@@ -92,6 +76,7 @@ if ($stmt->execute()) {
     <script>
       feather.replace();
     </script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.1.1/flowbite.min.js"></script>
     <style>
       .hidden {
         display: none;

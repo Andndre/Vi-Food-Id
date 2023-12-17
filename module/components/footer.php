@@ -4,7 +4,7 @@
 			<div class="mb-6 md:mb-0">
 				<a href="#" class="flex items-center">
 					<img
-						src="./assets/images/logo.svg"
+						src="/vi-food-id/assets/images/logo.svg"
 						class="h-6 me-3"
 						alt="VI-Food-logo"
 					/>
@@ -68,7 +68,7 @@
 				</a>
 
 				<a
-					href="https://github.com/Andndre/VI-Food"
+					href="https://github.com/Andndre/VI-Food-Id"
 					class="text-gray-500 hover:text-gray-900 ms-5"
 				>
 					<i data-feather="github" class="h-4 w-4"></i>

@@ -1,9 +1,11 @@
 <?php
+session_start();
+
 require "connection.php";
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     die("Hanya menerima POST");
-} 
+}
 
 // Fungsi untuk memasukkan data menu ke dalam database
 function tambahMenu($tempat_makan, $nama, $gambar, $harga, $deskripsi, $koneksi) {

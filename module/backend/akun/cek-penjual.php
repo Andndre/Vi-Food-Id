@@ -1,7 +1,6 @@
 <?php
-session_start();
-if (isset($_SESSION['tipe_akun']) !== 'penjual') {
-  header('Location: ../login/index.php'); 
+if (isset($_SESSION['role']) && $_SESSION['role'] !== 'penjual') {
+  header('Location: ../../akun/login');
   exit();
 }
 ?>

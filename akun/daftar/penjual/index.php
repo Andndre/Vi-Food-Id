@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="../../../assets/css/dist/output.css">
+    <link rel="stylesheet" href="/vi-food-id/assets/css/dist/output.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.js"></script>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -14,7 +14,7 @@
         <img class="hidden fixed lg:block w-screen h-screen -z-10 object-cover object-right rotate-180" src="https://images.unsplash.com/photo-1449962887303-b4a91c7c560a?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
         <!-- form Start -->
         <form class="max-w-xl mx-auto px-4 lg:mr-auto lg:ml-10 flex flex-col justify-center py-14" action="process_daftar_penjual.php" method="post">
-            <img src="../../../assets/images/logo.svg" alt="logo" class="h-5">
+            <img src="/vi-food-id/assets/images/logo.svg" alt="logo" class="h-5">
             <h1 class="font-bold text-4xl text-center pb-3">Selamat Datang</h1>
             <p class="text-center pb-4">Silakan masukkan <span class="text-black font-bold">Username</span> dan <span class="text-black font-bold">Password</span> Anda</p>
             <div class="mb-4 relative">

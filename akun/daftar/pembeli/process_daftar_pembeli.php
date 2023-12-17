@@ -20,19 +20,19 @@ if ($password != $konfirmasi) {
 
 // Periksa apakah username sudah ada di database menggunakan prepared statement
 $sql = "SELECT * FROM akun WHERE username=?";
-$stmt = $koneksi->prepare($sql);
+$stmtMenu = $koneksi->prepare($sql);
 
 // Check if the statement is prepared successfully
-if (!$stmt) {
+if (!$stmtMenu) {
     // If not, show an error message
     die("Error preparing statement: " . $koneksi->error);
 }
 
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$result = $stmt->get_result();
+$stmtMenu->bind_param("s", $username);
+$stmtMenu->execute();
+$menu = $stmtMenu->get_result();
 
-if ($result->num_rows > 0) {
+if ($menu->num_rows > 0) {
     // Jika username sudah ada, tampilkan pesan error
     echo "Username sudah ada. Silakan gunakan username lain atau masuk ke halaman login.";
 } else {

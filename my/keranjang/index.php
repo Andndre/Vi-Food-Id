@@ -1,44 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VI Food</title>
-    <link rel="stylesheet" href="./assets/css/dist/output.css" />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.js"></script>
-  </head>
+  <?php
+  if (!defined('ROOT'))
+    define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/vi-food-id');
+  $_GET['title'] = 'Keranjang Saya';
+  require ROOT . "/module/components/head-normal.php";
+  ?>
   <body class="bg-gray-200">
     <!-- Navbar -->
-    <nav class="bg-white shadow-sm">
-      <div
-        class="flex items-center h-16 justify-between w-full gap-6 container mx-auto px-4"
-      >
-        <a href="/"><img src="../assets/images/logo.svg" alt="logo" class="h-5" /></a>
-        <div class="flex gap-4 items-center">
-          <div class="flex gap-3 items-center">
-            <a
-              class="flex gap-2 items-center px-6 py-3 bg-primary/10 hover:bg-primary/25 transition-all duration-300 rounded-md"
-              href="../pembelian"
-              ><i data-feather="bar-chart-2"></i> Pembelian</a
-            >
-            <a
-              class="flex gap-2 items-center px-6 py-3 bg-primary/10 hover:bg-primary/25 transition-all duration-300 rounded-md"
-              href="../keranjang/"
-              ><i data-feather="shopping-cart"></i> Keranjang</a
-            >
-          </div>
-          <a href="../profil/">
-            <div class="w-10 h-10 bg-gray-400 rounded-full"></div>
-          </a>
-        </div>
-      </div>
-    </nav>
-    
+		<?php
+		require ROOT . '/module/components/navbar.php';
+		?>
+
     <div class="flex flex-col lg:flex-row">
       <aside
         id="sidebar"
@@ -168,7 +141,6 @@
         </div>
       </div>
     </div>
-
     <script>
       feather.replace();
     </script>

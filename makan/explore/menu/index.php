@@ -1,22 +1,22 @@
+<?php
+if (!defined('ROOT'))
+  define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/vi-food-id');
+require ROOT . "/module/backend/akun/cek-login.php";
+?>
+
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VI Food</title>
-    <link rel="stylesheet" href="../assets/css/dist/output.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.js"></script>
-</head>
+<?php
+$_GET['title'] = "Home";
+require ROOT . "/module/components/head.php"
+  ?>
 
 <body class="bg-gray-200 pb-10">
     <!-- Navbar -->
     <nav class="bg-white shadow-sm">
         <div class="flex items-center h-16 justify-between w-full gap-6 container mx-auto px-4">
-            <a href="/"><img src="../assets/images/logo.svg" alt="logo" class="h-5" /></a>
+            <a href="/"><img src="/vi-food-id/assets/images/logo.svg" alt="logo" class="h-5" /></a>
             <div class="flex gap-4 items-center">
                 <div class="flex gap-3 items-center">
                     <a class="flex gap-2 items-center px-6 py-3 bg-primary/10 hover:bg-primary/25 transition-all duration-300 rounded-md"
@@ -105,7 +105,7 @@
       <div
         class="flex items-center h-16 justify-between w-full gap-6 container mx-auto px-4"
       >
-        <a href="../profil/"><img src="../assets/images/logo.svg" alt="logo" class="h-5" /></a>
+        <a href="../profil/"><img src="/vi-food-id/assets/images/logo.svg" alt="logo" class="h-5" /></a>
         <div class="flex gap-4 items-center">
           <div class="flex gap-3 items-center">
             <a
@@ -172,12 +172,12 @@
               Warung Pak Wayan</span
             >
             <div class="flex h-3 ml-3 mt-1">
-              <img src="../assets/images/material-symbols_star.svg" alt="star" />
-              <img src="../assets/images/material-symbols_star.svg" alt="star" />
-              <img src="../assets/images/material-symbols_star.svg" alt="star" />
-              <img src="../assets/images/material-symbols_star.svg" alt="star" />
+              <img src="/vi-food-id/assets/images/material-symbols_star.svg" alt="star" />
+              <img src="/vi-food-id/assets/images/material-symbols_star.svg" alt="star" />
+              <img src="/vi-food-id/assets/images/material-symbols_star.svg" alt="star" />
+              <img src="/vi-food-id/assets/images/material-symbols_star.svg" alt="star" />
               <img
-                src="../assets/images/material-symbols_star-outline.svg"
+                src="/vi-food-id/assets/images/material-symbols_star-outline.svg"
                 alt="star"
               />
             </div>

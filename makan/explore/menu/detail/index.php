@@ -117,30 +117,42 @@ $allUlasan = getAllCommentsById($id);
         <div class="pt-8"></div>
 				<div class="font-bold text-2xl"><?= $harga ?> <span id="harga-di-keranjang" class="text-base">(total Rp. 0,00)</span></div>
         <div class="pt-4"></div>
-        <div class="flex gap-6 items-center">
+        <form class="flex gap-6 items-center" action="process_tambah_keranjang.php" method="POST">
 					<div class="flex items-center h-3 gap-3">
-						<button id="kurang" class="p-[.1rem] border-2 border-gray-600 aspect-square rounded-full"><i data-feather="minus" class="h-4"></i></button>
+						<button id="kurang" type="button" class="p-[.1rem] border-2 border-gray-600 aspect-square rounded-full"><i data-feather="minus" class="h-4"></i></button>
 						<span id="count">0</span>
-						<button id="tambah" class="p-[.1rem] border-2 border-gray-600 aspect-square rounded-full"><i data-feather="plus" class="h-4"></i></button>
+						<input type="text" id="kuantitas" name="kuantitas" value="0" class="hidden">
+						<input type="text" name="menu" value="<?= $menu['id'] ?>" class="hidden">
+						<button id="tambah" type="button" class="p-[.1rem] border-2 border-gray-600 aspect-square rounded-full"><i data-feather="plus" class="h-4"></i></button>
 					</div>
-          <a href="/vi-food-id/my/keranjang/index.php">
-            <span class="px-6 py-3 rounded-xl bg-primary text-white font-bold flex gap-3"><i data-feather="shopping-cart"></i> Masukkan ke Keranjang</span>
-          </a>
-				</div>
+          <button type="submit" id="checkout-btn" disabled="true" class="px-6 py-3 rounded-xl bg-primary disabled:bg-gray-400 text-white font-bold flex gap-3">
+						<i data-feather="shopping-cart"></i> Masukkan ke Keranjang
+					</button>
+				</form>
 				<script>
 					let harga = <?= $menu['harga'] ?>;
 					let count = 0;
 					const counter = $('#count');
 					const kurang = $('#kurang');
 					const tambah = $('#tambah');
+					const kuantitas = $('#kuantitas');
+					const checkoutBtn = $('#checkout-btn');
 					const totalHarga = $('#harga-di-keranjang');
 					kurang.click(() => {
-						if (count == 0) return;
+						if (count == 0) {
+							return;
+						}
 						counter.html(--count);
+						kuantitas.val(count);
+						if (count == 0) {
+							checkoutBtn.prop('disabled', true);
+						}
 						totalHarga.html('(total Rp. ' + (harga * count) + ',00)')
 					});
 					tambah.click(() => {
 						counter.html(++count);
+						kuantitas.val(count);
+						checkoutBtn.prop('disabled', false);
 						totalHarga.html('(total Rp. ' + (harga * count) + ',00)')
 					});
 				</script>
@@ -187,82 +199,81 @@ $allUlasan = getAllCommentsById($id);
         <!-- End Box comentar -->
         <!-- Komentar -->
         <?php if ($allUlasan): ?>
-							<?php 
-							while ($ulasan = $allUlasan->fetch_assoc()): 
-							$gambarPengirim = $ulasan['pengirim_image'] ? '/vi-food-id/uploads/' . $ulasan['pengirim_image'] : "/vi-food-id/assets/images/profile.png";?>
-							<div class="rounded-lg bg-white col-span-12">
-									<div class="flex gap-3 p-4">
-											<img class="w-10 h-10 aspect-square object-cover rounded-full"
-												src="<?= $gambarPengirim ?>"
-												alt="Rounded avatar" />
-											<div class="space-y-2">
-												<span class="font-bold"><?= $ulasan['pengirim'] ?></span>
-												<div class="flex gap-1">
-													<?php for ($i = 0; $i < $ulasan['bintang']; $i++): ?>
-													<svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-														fill="currentColor" viewBox="0 0 22 20">
-														<path
-															d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-													</svg>
-													<?php endfor; ?>
-													<?php for ($i = 0; $i < 5 - $ulasan['bintang']; $i++): ?>
-													<svg class="w-4 h-4 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-														fill="currentColor" viewBox="0 0 22 20">
-														<path
-															d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-													</svg>
-													<?php endfor; ?>
-												</div>
-												<p>
-													<?= $ulasan['ulasan_isi'] ?>
-												</p>
-											</div>
+					<?php 
+					while ($ulasan = $allUlasan->fetch_assoc()): 
+					$gambarPengirim = $ulasan['pengirim_image'] ? '/vi-food-id/uploads/' . $ulasan['pengirim_image'] : "/vi-food-id/assets/images/profile.png";?>
+					<div class="rounded-lg bg-white col-span-12">
+							<div class="flex gap-3 p-4">
+									<img class="w-10 h-10 aspect-square object-cover rounded-full"
+										src="<?= $gambarPengirim ?>"
+										alt="Rounded avatar" />
+									<div class="space-y-2">
+										<span class="font-bold"><?= $ulasan['pengirim'] ?></span>
+										<div class="flex gap-1">
+											<?php for ($i = 0; $i < $ulasan['bintang']; $i++): ?>
+											<svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+												fill="currentColor" viewBox="0 0 22 20">
+												<path
+													d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+											</svg>
+											<?php endfor; ?>
+											<?php for ($i = 0; $i < 5 - $ulasan['bintang']; $i++): ?>
+											<svg class="w-4 h-4 text-gray-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+												fill="currentColor" viewBox="0 0 22 20">
+												<path
+													d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+											</svg>
+											<?php endfor; ?>
+										</div>
+										<p>
+											<?= $ulasan['ulasan_isi'] ?>
+										</p>
 									</div>
-									<?php if ($ulasan['gambar_ulasan_href']): 
-										$gambarUlasan = explode(',', $ulasan['gambar_ulasan_href']);
-									?>	
-										<div id="controls-carousel" class="relative w-full" data-carousel="static">
-												<div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-												<?php foreach ($gambarUlasan as $key => $value): 
-														$gambar = '/vi-food-id/uploads/' . $value;
-														$isActive = ($key === 0) ? 'active' : '';
-												?>
-												<div class="hidden duration-700 ease-in-out" data-carousel-item="<?= $isActive ?>">
-														<img src="<?= $gambar ?>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
-												</div>
-												<?php endforeach; ?>
-											</div>
-											<button type="button"
-												class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-												data-carousel-prev>
-												<span
-													class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
-													<svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true"
-														xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-														<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-															stroke-width="2" d="M5 1 1 5l4 4" />
-													</svg>
-												</span>
-											</button>
-											<button type="button"
-												class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-												data-carousel-next>
-												<span
-													class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
-													<svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true"
-														xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-														<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-															stroke-width="2" d="m1 9 4-4-4-4" />
-													</svg>
-													<span class="sr-only">Next</span>
-												</span>
-											</button>
-									</div>
-									<?php endif; ?>
 							</div>
-							<?php endwhile; ?>
-						<?php endif ?>
-        
+							<?php if ($ulasan['gambar_ulasan_href']): 
+								$gambarUlasan = explode(',', $ulasan['gambar_ulasan_href']);
+							?>	
+								<div id="controls-carousel" class="relative w-full" data-carousel="static">
+										<div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+										<?php foreach ($gambarUlasan as $key => $value): 
+												$gambar = '/vi-food-id/uploads/' . $value;
+												$isActive = ($key === 0) ? 'active' : '';
+										?>
+										<div class="hidden duration-700 ease-in-out" data-carousel-item="<?= $isActive ?>">
+												<img src="<?= $gambar ?>" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." />
+										</div>
+										<?php endforeach; ?>
+									</div>
+									<button type="button"
+										class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+										data-carousel-prev>
+										<span
+											class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+											<svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true"
+												xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+												<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+													stroke-width="2" d="M5 1 1 5l4 4" />
+											</svg>
+										</span>
+									</button>
+									<button type="button"
+										class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+										data-carousel-next>
+										<span
+											class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+											<svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true"
+												xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+												<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+													stroke-width="2" d="m1 9 4-4-4-4" />
+											</svg>
+											<span class="sr-only">Next</span>
+										</span>
+									</button>
+							</div>
+							<?php endif; ?>
+					</div>
+					<?php endwhile; ?>
+				<?php endif ?>
       </div>
     </div>
     <!-- End Main -->

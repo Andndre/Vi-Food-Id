@@ -34,7 +34,7 @@ include ROOT . "/module/backend/akun/cek-login.php";
               <div class="sidebar-text">Warung Pak Wayan</div></a
             >
           </li>
-          <li
+          <!-- <li
             title="Dashboard"
             class="transition-all duration-300 rounded-md px-4 py-2 bg-gray-900"
           >
@@ -42,7 +42,7 @@ include ROOT . "/module/backend/akun/cek-login.php";
               <i data-feather="loc"></i>
               <div class="sidebar-text">KFC</div></a
             >
-          </li>
+          </li> -->
         </ul>
       </aside>
       <div class="flex-1 w-full">

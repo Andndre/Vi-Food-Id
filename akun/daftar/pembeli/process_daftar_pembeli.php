@@ -1,6 +1,8 @@
 <?php
+if (!defined('ROOT')) define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/vi-food-id');
 
-require "../../../module/backend/database/connection.php";
+
+require ROOT . "/module/backend/database/connection.php";
 
 // Cek koneksi
 if ($koneksi->connect_error) {
@@ -57,7 +59,7 @@ if ($menu->num_rows > 0) {
     }
 
     // Jika data berhasil disimpan, arahkan ke halaman login
-    header("Location: ../login/index.php");
+    header("Location: ../../login");
 }
 
 $koneksi->close();

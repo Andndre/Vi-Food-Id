@@ -52,10 +52,10 @@ $_SESSION['role'] = $role;
 // Alihkan berdasarkan hak akses pengguna
 switch ($role) {
 	case 'penjual':
-		header("Location: ../../admin/penjual/dashboard/index.php");
+		header("Location: /vi-food-id/admin/penjual/dashboard/index.php");
 		break;
 	case 'pembeli':
-		header("Location: ../../home/index.php");
+		header("Location: /vi-food-id/home/index.php");
 		break;
 	default:
 		echo "Error: Peran tidak valid.";

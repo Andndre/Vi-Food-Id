@@ -91,7 +91,7 @@ if ($result_username->num_rows > 0) {
         }
 
         // Jika data berhasil disimpan, arahkan ke halaman login
-        header("Location: ../login/index.php");
+        header("Location: ../../login");
     }
 }
 

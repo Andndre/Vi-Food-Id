@@ -6,44 +6,78 @@ if (!defined('ROOT')) {
 require_once ROOT . "/module/backend/akun/cek-login.php";
 require_once ROOT . "/module/backend/database/connection.php";
 
+function getAllCommentsById($slug) {
+	$koneksi = getDb();
+	// Query untuk mendapatkan semua komentar pada semua menu dari tempat makan
+	$query = "SELECT um.id AS ulasan_id,
+			um.id_menu,
+			um.pengirim,
+			um.bintang,
+			um.isi AS ulasan_isi,
+			GROUP_CONCAT(gu.href) AS gambar_ulasan_href
+		FROM ulasan_menu AS um
+		JOIN menu AS m ON um.id_menu = m.id
+		JOIN tempat_makan AS tm ON m.tempat_makan = tm.username
+		LEFT JOIN gambar_ulasan AS gu ON um.id = gu.id_ulasan
+		WHERE tm.slug = ?
+		GROUP BY um.id, um.id_menu, um.pengirim, um.bintang, um.isi;";
+
+	$stmt = $koneksi->prepare($query);
+
+	if (!$stmt) {
+		echo "Error preparing statement: " . $koneksi->error;
+		exit();
+	}
+
+	$stmt->bind_param("s", $slug);
+
+	if (!$stmt->execute()) {
+		echo "Error executing statement: " . $stmt->error;
+		exit();
+	} else {
+		$result = $stmt->get_result();
+		$comments = $result->fetch_all(MYSQLI_ASSOC);
+		return $comments;
+	}
+}
+
+function getAllRating($slug) {
+	$query = "SELECT
+		tm.nama_tempat_makan,
+		tm.slug AS tempat_makan_slug,
+		COALESCE(SUM(CASE WHEN um.bintang = 0 THEN 1 ELSE 0 END), 0) AS rating_0,
+		COALESCE(SUM(CASE WHEN um.bintang = 1 THEN 1 ELSE 0 END), 0) AS rating_1,
+		COALESCE(SUM(CASE WHEN um.bintang = 2 THEN 1 ELSE 0 END), 0) AS rating_2,
+		COALESCE(SUM(CASE WHEN um.bintang = 3 THEN 1 ELSE 0 END), 0) AS rating_3,
+		COALESCE(SUM(CASE WHEN um.bintang = 4 THEN 1 ELSE 0 END), 0) AS rating_4,
+		COALESCE(SUM(CASE WHEN um.bintang = 5 THEN 1 ELSE 0 END), 0) AS rating_5
+	FROM tempat_makan AS tm
+	LEFT JOIN menu AS m ON tm.username = m.tempat_makan
+	LEFT JOIN ulasan_menu AS um ON m.id = um.id_menu
+	WHERE tm.slug = '$slug'
+	GROUP BY tm.nama_tempat_makan, tm.slug;";
+
+	$koneksi = getDb();
+
+	$result = $koneksi->query($query);
+
+	if (!$result) {
+		echo "Error executing query: " . $koneksi->error;
+		exit();
+	}
+
+	$ratings = $result->fetch_assoc();
+
+	return $ratings;
+}
+
+
 // Periksa apakah parameter 'id' ada dalam URL
 if(isset($_GET['slug'])) {
 	$slug = $_GET['slug'];
-
-	function getAllCommentsById($slug) {
-		$koneksi = getDb();
-		// Query untuk mendapatkan semua komentar pada semua menu dari tempat makan
-		$query = "SELECT um.id AS ulasan_id,
-				um.id_menu,
-				um.pengirim,
-				um.bintang,
-				um.isi AS ulasan_isi,
-				GROUP_CONCAT(gu.href) AS gambar_ulasan_href
-			FROM ulasan_menu AS um
-			JOIN menu AS m ON um.id_menu = m.id
-			JOIN tempat_makan AS tm ON m.tempat_makan = tm.username
-			LEFT JOIN gambar_ulasan AS gu ON um.id = gu.id_ulasan
-			WHERE tm.slug = ?
-			GROUP BY um.id, um.id_menu, um.pengirim, um.bintang, um.isi;";
-
-		$stmt = $koneksi->prepare($query);
-
-		if (!$stmt) {
-			echo "Error preparing statement: " . $koneksi->error;
-			exit();
-		}
-
-		$stmt->bind_param("s", $slug);
-
-		if (!$stmt->execute()) {
-			echo "Error executing statement: " . $stmt->error;
-			exit();
-		} else {
-			$result = $stmt->get_result();
-			$comments = $result->fetch_all(MYSQLI_ASSOC);
-			return $comments;
-		}
-	}
+	$ratings = getAllRating($slug);
+	$sumAllRating = $ratings['rating_0'] + $ratings['rating_1'] + $ratings['rating_2'] + $ratings['rating_3'] + $ratings['rating_4'] + $ratings['rating_5'];
+	$maxRating = max((int)$ratings['rating_0'], (int)$ratings['rating_1'], (int)$ratings['rating_2'], (int)$ratings['rating_3'], (int)$ratings['rating_4'], (int)$ratings['rating_5']);
 
 	// Panggil fungsi getAllCommentsById() dengan parameter $id
 	$comments = getAllCommentsById($slug);
@@ -108,44 +142,17 @@ if(isset($_GET['slug'])) {
         <h2 class="font-bold text-xl mt-6">Rating dan Komentar</h2>
         <p class="mt-2 text-gray-500">Berikut adalah kumpulan komentar yang sudah pernah makan di sini</p>
         
-        <div class="flex items-center mt-4">
-          <a href="#" class="text-sm font-medium">5</a>
-          <div class="w-2/4 h-5 mx-4 bg-gray-300 rounded">
-              <div class="h-5 bg-primary rounded" style="width: 70%"></div>
-          </div>
-          <span class="text-sm font-medium text-gray-500">70%</span>
-        </div>
-        <div class="flex items-center mt-4">
-          <a href="#" class="text-sm font-medium">4</a>
-          <div class="w-2/4 h-5 mx-4 bg-gray-300 rounded">
-              <div class="h-5 bg-primary rounded" style="width: 17%"></div>
-          </div>
-          <span class="text-sm font-medium text-gray-500">17%</span>
-        </div>
-        <div class="flex items-center mt-4">
-          <a href="#" class="text-sm font-medium">3</a>
-          <div class="w-2/4 h-5 mx-4 bg-gray-300 rounded">
-              <div class="h-5 bg-primary rounded" style="width: 8%"></div>
-          </div>
-          <span class="text-sm font-medium text-gray-500">8%</span>
-        </div>
-        <div class="flex items-center mt-4">
-          <a href="#" class="text-sm font-medium">2</a>
-          <div class="w-2/4 h-5 mx-4 bg-gray-300 rounded">
-              <div class="h-5 bg-primary rounded" style="width: 4%"></div>
-          </div>
-          <span class="text-sm font-medium text-gray-500">4%</span>
-        </div>
-        <div class="flex items-center mt-4">
-          <a href="#" class="text-sm font-medium">1</a>
-          <div class="w-2/4 h-5 mx-4 bg-gray-300 rounded">
-              <div class="h-5 bg-primary rounded" style="width: 1%"></div>
-          </div>
-          <span class="text-sm font-medium text-gray-500">1%</span>
-        </div>
-
+				<?php foreach (['rating_0', 'rating_1', 'rating_2', 'rating_3', 'rating_4', 'rating_5'] as $index => $key): ?>
+						<div class="flex items-center mt-4">
+								<a href="#" class="text-sm font-medium"><?= $index ?></a>
+								<div class="w-2/4 h-5 mx-4 bg-gray-300 rounded">
+										<div class="h-5 bg-primary rounded" style="width: <?= $ratings[$key] / $maxRating * 100 ?>%"></div>
+								</div>
+								<span class="text-sm font-medium text-gray-500"><?= ($ratings[$key] / $maxRating) * (100 / $sumAllRating) ?>%</span>
+						</div>
+				<?php endforeach ?>
         <!-- Box comentar -->      
-        <form>
+        <form class="mt-6">
             <label for="chat" class="sr-only">Komentar mu</label>
             <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50">
                 <button type="button" class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100">
@@ -184,14 +191,26 @@ if(isset($_GET['slug'])) {
             <div class="ml-6 pt-3">
               <span class="text-lg font-bold">Maudy Ayunda</span>
               <div class="flex h-5 mt-1 mr-11">
-                <img src="/vi-food-id/assets/images/material-symbols_star.svg" alt="star" />
-                <img src="/vi-food-id/assets/images/material-symbols_star.svg" alt="star" />
-                <img src="/vi-food-id/assets/images/material-symbols_star.svg" alt="star" />
-                <img src="/vi-food-id/assets/images/material-symbols_star.svg" alt="star" />
-                <img
-                  src="/vi-food-id/assets/images/material-symbols_star-outline.svg"
-                  alt="star_outline"
-                />
+								<svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+									fill="currentColor" viewBox="0 0 22 20">
+									<path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+								</svg>
+								<svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+									fill="currentColor" viewBox="0 0 22 20">
+									<path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+								</svg>
+								<svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+									fill="currentColor" viewBox="0 0 22 20">
+									<path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+								</svg>
+								<svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+									fill="currentColor" viewBox="0 0 22 20">
+									<path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+								</svg>
+								<svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+									fill="currentColor" viewBox="0 0 22 20">
+									<path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+								</svg>
               </div>
               <p class="text-neutral-500 text-sm mt-3">
                 Mie goreng di Warung Pak Wayan sungguh luar biasa! Rasanya

@@ -4,7 +4,7 @@ if (!isset($_SESSION)) {
 }
 
 if (!isset($_SESSION['username'])) {
-  header('Location: ../../../akun/login'); 
+  header('Location: /vi-food-id/akun/login'); 
   exit();
 }
 ?>

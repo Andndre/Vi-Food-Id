@@ -3,7 +3,106 @@ session_start();
 
 if (!defined('ROOT'))
   define('ROOT', $_SERVER['DOCUMENT_ROOT'] . '/vi-food-id');
-require ROOT . "/module/backend/akun/cek-penjual.php";
+  require_once ROOT . "/module/backend/akun/cek-login.php";
+  require_once ROOT . "/module/backend/database/connection.php";
+  
+      function getAllCommentsById($slug) {
+        $koneksi = getDb();
+        // Query untuk mendapatkan semua komentar pada semua menu dari tempat makan
+        $query = "SELECT um.id AS ulasan_id,
+                um.id_menu,
+                um.pengirim,
+                um.bintang,
+                um.isi AS ulasan_isi,
+                GROUP_CONCAT(gu.href) AS gambar_ulasan_href
+            FROM ulasan_menu AS um
+            JOIN menu AS m ON um.id_menu = m.id
+            JOIN tempat_makan AS tm ON m.tempat_makan = tm.username
+            LEFT JOIN gambar_ulasan AS gu ON um.id = gu.id_ulasan
+            WHERE tm.slug = ?
+            GROUP BY um.id, um.id_menu, um.pengirim, um.bintang, um.isi;";
+
+        $stmt = $koneksi->prepare($query);
+
+        if (!$stmt) {
+            echo "Error preparing statement: " . $koneksi->error;
+            exit();
+        }
+
+        $stmt->bind_param("s", $slug);
+
+        if (!$stmt->execute()) {
+            echo "Error executing statement: " . $stmt->error;
+            exit();
+        } else {
+            $result = $stmt->get_result();
+            $comments = $result->fetch_all(MYSQLI_ASSOC);
+            return $comments;
+        }
+    }
+
+        function getAllRating($slug) {
+          $query = "SELECT
+              tm.nama_tempat_makan,
+              tm.slug AS tempat_makan_slug,
+              COALESCE(SUM(CASE WHEN um.bintang = 0 THEN 1 ELSE 0 END), 0) AS rating_0,
+              COALESCE(SUM(CASE WHEN um.bintang = 1 THEN 1 ELSE 0 END), 0) AS rating_1,
+              COALESCE(SUM(CASE WHEN um.bintang = 2 THEN 1 ELSE 0 END), 0) AS rating_2,
+              COALESCE(SUM(CASE WHEN um.bintang = 3 THEN 1 ELSE 0 END), 0) AS rating_3,
+              COALESCE(SUM(CASE WHEN um.bintang = 4 THEN 1 ELSE 0 END), 0) AS rating_4,
+              COALESCE(SUM(CASE WHEN um.bintang = 5 THEN 1 ELSE 0 END), 0) AS rating_5
+          FROM tempat_makan AS tm
+          LEFT JOIN menu AS m ON tm.username = m.tempat_makan
+          LEFT JOIN ulasan_menu AS um ON m.id = um.id_menu
+          WHERE tm.slug = '$slug'
+          GROUP BY tm.nama_tempat_makan, tm.slug;";
+      
+          $koneksi = getDb();
+      
+          $result = $koneksi->query($query);
+      
+          if (!$result) {
+              echo "Error executing query: " . $koneksi->error;
+              exit();
+          }
+      
+          $ratings = $result->fetch_assoc();
+      
+          return $ratings;
+      }
+      
+      if(isset($_GET['slug'])) {
+        $slug = $_GET['slug'];
+        $ratings = getAllRating($slug);
+        $sumAllRating = $ratings['rating_0'] + $ratings['rating_1'] + $ratings['rating_2'] + $ratings['rating_3'] + $ratings['rating_4'] + $ratings['rating_5'];
+        $maxRating = max((int)$ratings['rating_0'], (int)$ratings['rating_1'], (int)$ratings['rating_2'], (int)$ratings['rating_3'], (int)$ratings['rating_4'], (int)$ratings['rating_5']);
+    
+        // Panggil fungsi getAllCommentsById() dengan parameter $slug
+        $comments = getAllCommentsById($slug);
+        
+        // Tampilkan ulasan dan informasi rating di halaman web
+        foreach ($comments as $comment) {
+            // Lakukan operasi untuk menampilkan informasi ulasan menu
+            echo "ID Ulasan: " . $comment['ulasan_id'] . "<br>";
+            echo "Pengirim: " . $comment['pengirim'] . "<br>";
+            echo "Bintang: " . $comment['bintang'] . "<br>";
+            echo "Isi Ulasan: " . $comment['ulasan_isi'] . "<br>";
+            echo "Gambar Ulasan: " . $comment['gambar_ulasan_href'] . "<br><br>";
+        }
+        
+        // Tampilkan informasi rating
+        echo "Nama Tempat Makan: " . $ratings['nama_tempat_makan'] . "<br>";
+        echo "Slug Tempat Makan: " . $ratings['tempat_makan_slug'] . "<br>";
+        echo "Rating 0: " . $ratings['rating_0'] . "<br>";
+        echo "Rating 1: " . $ratings['rating_1'] . "<br>";
+        echo "Rating 2: " . $ratings['rating_2'] . "<br>";
+        echo "Rating 3: " . $ratings['rating_3'] . "<br>";
+        echo "Rating 4: " . $ratings['rating_4'] . "<br>";
+        echo "Rating 5: " . $ratings['rating_5'] . "<br>";
+    } else {
+        echo "Parameter 'slug' tidak ditemukan dalam URL.";
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -17,18 +116,10 @@ require ROOT . "/module/backend/akun/cek-penjual.php";
     ?>
       <div class="flex-1 flex flex-col">
 			<?php require ROOT . "/module/components/navbar.php"; ?>
+
         <!-- Konten komentar mulai-->
         <div class="py-10 px-5 mx-3 my-3 bg-white rounded-md">
           <div class="flex items-center mb-4">
-            <img
-              class="object-cover w-16 h-16 me-4 rounded-full"
-              src="https://www.waseda.jp/inst/weekly/assets/uploads/2021/09/IMG_3675-940x627.jpg"
-              alt="jerome"
-            />
-            <div>
-              <p class="text-lg font-medium">Jerome Polin</p>
-              <p class="text-gray-400 text-sm">Bergabung November 2023</p>
-            </div>
           </div>
           <div class="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
             <svg
@@ -88,17 +179,12 @@ require ROOT . "/module/backend/akun/cek-penjual.php";
             </svg>
           </div>
           <div class="mb-5 text-sm text-gray-500">
-            <p>12 November, 2023</p>
+            <p></p>
           </div>
           <p class="mb-2 text-gray-500">
-            Mie goreng di Warung Pak Wayan sungguh luar biasa! Rasanya begitu
-            autentik dan penuh dengan rempah-rempah yang membuat lidah saya
-            bergoyang.
+           
           </p>
           <p class="mb-3 text-gray-500">
-            Tapi semuanya enak kok! Harganya oke juga kok, cuman emang buat yang
-            harga segini ukurannya standar ya, nggak terlalu besar-besar
-            banget..
           </p>
           <a
             href="#"

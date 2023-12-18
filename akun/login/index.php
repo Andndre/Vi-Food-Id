@@ -26,7 +26,7 @@ if (!defined('ROOT'))
 
 $_GET['title'] = 'Login ke Akun Anda - VI-Food';
 
-require ROOT . "/module/components/head.php";
+require_once ROOT . "/module/components/head.php";
 
 ?>
 

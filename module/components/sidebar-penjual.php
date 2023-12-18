@@ -26,6 +26,12 @@ $locations = [
     "href" => "/vi-food-id/admin/penjual/ulasan/",
     "highlight" => "manajemen-ulasan"
   ],
+  [
+    "judul" => "Gambar",
+    "icon" => "image",
+    "href" => "/vi-food-id/admin/penjual/manajemen-gambar",
+    "highlight" => "manajemen-gambar"
+  ],
 ];
 
 ?>

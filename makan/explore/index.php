@@ -20,7 +20,6 @@ require ROOT . "/module/components/head.php";
 <body class="bg-gray-200 pb-6">
 	<!-- Navbar -->
 	<?php require ROOT . '/module/components/navbar.php'; ?>
-	<!-- Header w/Search -->
 	<div class="container mx-auto">
 		<div
 				class="mx-4 mt-4 bg-cover rounded-2xl px-6 py-24 lg:py-36 bg-[url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsouIA8z5MLF0d2Z7NnunT8Sp7QvVaqbFCZA&usqp=CAU')] text-white text-center space-y-4">
@@ -38,7 +37,7 @@ require ROOT . "/module/components/head.php";
 		</div>
 		<div class="pt-6"></div>
 		<div class="grid grid-cols-12 container mx-auto px-4 gap-6">
-			<!-- Filter -->
+			<!-- Filter
 			<aside class="col-span-12 md:col-span-4 lg:col-span-3 p-6 bg-white shadow-sm rounded-2xl mb-auto">
 				<h2 class="font-bold text-2xl">Filter</h2>
 				<form class="space-y-3">
@@ -88,7 +87,7 @@ require ROOT . "/module/components/head.php";
 						</div>
 					</div>
 				</form>
-			</aside>
+			</aside> -->
 			<!-- Tempat Makan -->
 			<div class="col-span-12 md:col-span-8 lg:col-span-9">
 					<h2 class="font-bold text-xl">Rekomendasi</h2>
@@ -96,7 +95,7 @@ require ROOT . "/module/components/head.php";
 					<div class="grid grid-cols-12 pt-4 gap-4">
 						<?php while ($row = $semua_menu->fetch_assoc()): ?>
 							<div class="overflow-hidden col-span-12 md:col-span-6 lg:col-span-4 bg-white rounded-2xl shadow-sm">
-								<img class="w-full aspect-video object-cover" src='<?= '/vi-food-id/uploads/' . $row['gambar'] ?>' alt="">
+								<img class="w-full aspect-video object-cover" src='<?= '/vi-food-id/uploads/' . $row['image'] ?>' alt="">
 								<div class="p-4 space-y-2 text-sm">
 									<h3 class="font-bold text-xl"><?= $row['nama_tempat_makan'] ?><h3>
 									<div class="flex justify-between items-center flex-wrap gap-3 pt-4">

@@ -6,16 +6,34 @@ if (!defined('ROOT'))
 require_once ROOT . "/module/backend/akun/cek-penjual.php";
 require_once ROOT . "/module/backend/database/connection.php";
 
-$username = $_SESSION['username'];
-$idMenu = $_POST['id'];
-$nama = $_POST['nama'];
-$harga = $_POST['harga'];
-$deskripsi = $_POST['deskripsi'];
+if (isset($_POST['save'])) {
+	$username = $_SESSION['username'];
+	$idMenu = $_POST['id'];
+	$nama = $_POST['nama'];
+	$harga = $_POST['harga'];
+	$deskripsi = $_POST['deskripsi'];
+	
+	// Validate and move the uploaded image file
+	$target_dir = "../../../../uploads/";
+	$nama_file = $username . '_menu_' . $idMenu . '.png';
+	$gambar = $target_dir . $nama_file;
+	
+	if ($_FILES['image']['tmp_name']) {
+		if (file_exists($gambar)) {
+			unlink($gambar);
+		}
+		move_uploaded_file($_FILES["image"]["tmp_name"], $gambar);
+		updateMenuWithImage($username, $nama, $harga, $deskripsi, $nama_file, $idMenu);
+		header("Location: ../");
+	} else {
+		updateMenu($username, $nama, $harga, $deskripsi, $idMenu);
+		header("Location: ../");
+	}
+} else if (isset($_POST['delete'])) {
+	deleteMenuWithId($_POST['id']);
+	header("Location: ../");
+}
 
-// Validate and move the uploaded image file
-$target_dir = "../../../../uploads/";
-$nama_file = $username . '_menu_' . $idMenu . '.png';
-$gambar = $target_dir . $nama_file;
 
 function updateMenu($username, $nama, $harga, $deskripsi, $idMenu) {
 	$koneksi = getDb();
@@ -47,14 +65,17 @@ function updateMenuWithImage($username, $nama, $harga, $deskripsi, $image, $idMe
 	}
 }
 
-if ($_FILES['image']['tmp_name']) {
-	if (file_exists($gambar)) {
-		unlink($gambar);
+function deleteMenuWithId($idMenu) {
+	$koneksi = getDb();
+	// Delete the menu using prepared statements
+	$sql = "DELETE FROM menu WHERE id = ?";
+	$stmt = $koneksi->prepare($sql);
+	$stmt->bind_param("i", $idMenu);
+
+	if ($stmt->execute()) {
+		header("Location: ../");
+		exit;
+	} else {
+		die("Error deleting record: " . $stmt->error);
 	}
-	move_uploaded_file($_FILES["image"]["tmp_name"], $gambar);
-	updateMenuWithImage($username, $nama, $harga, $deskripsi, $nama_file, $idMenu);
-	header("Location: ../");
-} else {
-	updateMenu($username, $nama, $harga, $deskripsi, $idMenu);
-	header("Location: ../");
 }

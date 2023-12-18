@@ -10,15 +10,16 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // Fungsi untuk memasukkan data menu ke dalam database
-function tambahGambar($tempat_makan, $nama, $gambar, $harga, $deskripsi, $koneksi) {
-    $query = "INSERT INTO menu (tempat_makan, nama, gambar, harga, deskripsi) VALUES (?, ?, ?, ?, ?)";
+function tambahGambar($tempat_makan,$gambar) {
+		$koneksi = getDb();
+    $query = "INSERT INTO gambar_tempat_makan (username, src) VALUES (?, ?)";
     $stmt = mysqli_prepare($koneksi, $query);
 
     if (!$stmt) {
         die("Error in prepare statement: " . mysqli_error($koneksi));
     }
 
-    mysqli_stmt_bind_param($stmt, "sssis", $tempat_makan, $nama, $gambar, $harga, $deskripsi);
+    mysqli_stmt_bind_param($stmt, "ss", $tempat_makan, $gambar);
     $result = mysqli_stmt_execute($stmt);
 
     if (!$result) {
@@ -27,10 +28,6 @@ function tambahGambar($tempat_makan, $nama, $gambar, $harga, $deskripsi, $koneks
 
     mysqli_stmt_close($stmt);
 }
-// Ambil data dari form
-$namaMakanan = $_POST['nama-makanan'];
-$hargaMakanan = $_POST['harga-makanan'];
-$deskripsiMakanan = $_POST['deskripsi'];
 
 $targetDir = "../../../../uploads/";
 $gambarMenu = $targetDir . basename($_FILES["gambar-menu"]["name"]);
@@ -40,7 +37,7 @@ move_uploaded_file($_FILES["gambar-menu"]["tmp_name"], $gambarMenu);
 $tempatMakan = $_SESSION['username']; 
 
 // Panggil fungsi untuk menambahkan menu
-tambahGambar($tempatMakan, $namaMakanan, basename($_FILES["gambar-menu"]["name"]), $hargaMakanan, $deskripsiMakanan, $koneksi);
+tambahGambar($tempatMakan, basename($_FILES["gambar-menu"]["name"]));
 
 // Redirect ke halaman sukses atau halaman lain yang sesuai
 header("Location: ../");

@@ -8,7 +8,9 @@ require ROOT . "/module/backend/akun/cek-penjual.php";
 
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
-<?php require ROOT . "/module/components/head.php" ?>
+<?php 
+$_GET['title'] = "Tambah Menu";
+require ROOT . "/module/components/head.php" ?>
   <body class="bg-gray-200">
     <div class="flex w-full min-h-screen">
       <?php 

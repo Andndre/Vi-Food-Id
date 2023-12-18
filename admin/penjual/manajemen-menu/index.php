@@ -14,12 +14,12 @@ function getAllMenu($tempatMakan) {
 	$stmtMenu->bind_param("s", $tempatMakan);
 	
 	if ($stmtMenu->execute()) {
-			$menu = $stmtMenu->get_result();
-			return $menu;
+		$menu = $stmtMenu->get_result();
+		return $menu;
 	} else {
-			// Handle query execution error
-			echo "Error executing query: " . $stmtMenu->error;
-			exit();
+		// Handle query execution error
+		echo "Error executing query: " . $stmtMenu->error;
+		exit();
 	}
 }
 
@@ -33,7 +33,7 @@ $menu = getAllMenu($tempatMakan);
     <div class="flex w-full min-h-screen">
       <?php 
         $_GET['highlight'] = "manajemen-menu";
-      require ROOT . "/module/components/sidebar-penjual.php";
+      	require ROOT . "/module/components/sidebar-penjual.php";
       ?>
       <div class="flex-1 flex flex-col">
 				<?php require ROOT . "/module/components/navbar.php";?>
@@ -47,13 +47,15 @@ $menu = getAllMenu($tempatMakan);
           </div>
           <div class="grid grid-cols-12 gap-4">
 						<!-- Card Start -->
-						<?php while ($row = $menu->fetch_assoc()): ?>
+						<?php while ($row = $menu->fetch_assoc()): 
+						 	$harga = "Rp. " . number_format($row['harga'], 0, ",", "."); 
+						?>
 						<div class="overflow-hidden col-span-12 md:col-span-6 lg:col-span-4 bg-white rounded-2xl shadow-sm">
 							<img class="w-full object-cover aspect-video" src="/vi-food-id/uploads/<?= $row['gambar'] ?>" alt=""/>
 							<div class="p-4 space-y-2">
 								<h3 class="font-bold text-xl"><?= $row['nama'] ?><h3>
 								<div class="flex justify-between items-center flex-wrap gap-3 pt-4">
-									<span class="text-lg text-gray-400 font-semibold"><?= $row['harga'] ?></span>
+									<span class="text-lg text-gray-400 font-semibold"><?= $harga ?></span>
 									<a class="flex gap-2 items-center px-6 py-3 ml-auto bg-primary/20 hover:bg-primary transition-all duration-300 font-semibold rounded-lg" href="edit?id=<?= $row['id'] ?>"><i class="h-5" data-feather="edit-2"></i> Edit</a>
 								</div>
 							</div>

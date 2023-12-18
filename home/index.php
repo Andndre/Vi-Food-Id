@@ -129,13 +129,14 @@ $allUlasan = getAllUlasan();
             </div>
             <p class="font-bold">Ulasan teratas</p>
             <div class="space-y-3">
+						<?php if ($allUlasan): ?>
 							<?php 
 							while ($ulasan = $allUlasan->fetch_assoc()): 
-							$gambarTempatMakan = $ulasan['pengirim_image'] ? '/vi-food-id/uploads/' . $ulasan['pengirim_image'] : "/vi-food-id/assets/images/profile.png";?>
+							$gambarPengirim = $ulasan['pengirim_image'] ? '/vi-food-id/uploads/' . $ulasan['pengirim_image'] : "/vi-food-id/assets/images/profile.png";?>
 							<div class="rounded-lg bg-white">
 									<div class="flex gap-3 p-4">
 											<img class="w-10 h-10 aspect-square object-cover rounded-full"
-												src="<?= $gambarTempatMakan ?>"
+												src="<?= $gambarPengirim ?>"
 												alt="Rounded avatar" />
 											<div class="space-y-2">
 												<div>
@@ -214,6 +215,7 @@ $allUlasan = getAllUlasan();
 										Tempat Makan</a></div>
 							</div>
 							<?php endwhile; ?>
+						<?php endif ?>
 						</div>
         </div>
         <div class="col-span-12 md:col-span-5 lg:col-span-3 ">
